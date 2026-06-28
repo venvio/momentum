@@ -24,11 +24,9 @@ int init_habit(Habit *h) {
     //initialize file
     char file[24];
     strcpy(file, h->name);
-    printf("name copy: %s\n", file);
 
     char ext[5] = ".csv\0";
     strcat(file, ext);
-    printf("file name: %s\n", file);
 
     char path[11] = "../data/\0";
     strcat(path, file);
@@ -47,31 +45,10 @@ int init_habit(Habit *h) {
             return 1;
         } else { // file creation success
             fputs("Date,Streak\n", fptr); // insert template data 
-            printf("File for habit \"%s\" created at \"%s\"\n", h->name, path);
+            printf("Habit data created at \"%s\"\n", path);
             fclose(fptr);
         }
     }
 
     return 0;
 };
-
-// deletes a habit file from the data/ directory.
-int del_habit(char *path) {
-
-}
-int get_input() {
-    //receive
-    int x;
-    scanf("%d", &x);
-
-    //validate
-    if (x < 0 || x > 10) { 
-        return -1; //invalid input
-    }
-    else {
-        return x;
-    }
-};
-
-// load habit
-
