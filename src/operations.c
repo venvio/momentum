@@ -3,6 +3,40 @@
 #include <string.h>
 #include <dirent.h>
 #include <regex.h>
+#include <time.h>
+#include "operations.h"
+
+// create a new Habit
+int create_habit(char *name) {
+    // create file path
+    char file[24] = "";
+    char path[24] = "../data/\0";
+    
+    strcat(file, name);
+    strcat(file, ".csv");
+    strcat(path, file);
+    printf("Full path: %s\n", path);
+
+    // create file
+    if (fopen(path, "r") != NULL) { // file already exists
+        printf("File \"%s\" already exists.\n", path);
+        return 1;
+
+    } else if (fopen(path, "r") == NULL) { //create file
+        FILE *fptr = fopen(path, "w");
+
+        if (fptr == NULL) { // file creation failed
+            printf("File creation for \"%s\" failed\n", path);
+            return 1;
+        } else { // file creation success
+            fputs("Date,Streak\n", fptr); // insert template data 
+            printf("Habit data created at \"%s\"\n", path);
+            fclose(fptr);
+        }
+    }
+
+    return 0;
+};
 
 // searches the directory given by `char *path` and returns an array of files for up to 10 .csv files in the directory.
 char **find_files(char *path) {

@@ -2,42 +2,47 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include "habit.c"
-#include "file.c"
+#include "operations.h"
+
+void flush();
 
 int main() {
     bool running = true;
-    int input;
 
     // initial input block
     while (running) {
-        printf("\nHello! Choose an option.\n"
+        printf("\nWelcome to the habit tracker!\n"
         "1) Create new habit\n"
         "2) Delete habit\n"
         "3) View habits\n"
-        "4) Exit\n");
+        "4) Exit\n"
+        "Choose an option: ");
 
-        //receive input
-        scanf("%d", &input);
-        getchar(); // consume trailing \n?
+       int opt = fgetc(stdin);
+       flush();
 
-        //validate
-        if (input < 0 || input > 10) { 
-            return -1; //invalid input
+        if (opt < '1' || opt > '4') {
+            printf("Invalid input.\n");
+            continue;
         }
 
+        int option = opt - '0';
+
+        printf("input: %d\n", option);
+
         // test valid input against cases
-        switch (input) {
+        switch (option) {
             case 1: {// create new Habit
-                Habit *habit = malloc(sizeof(Habit));
+                // fill name
+                char name[11];
+                printf("Enter habit name (ten characters or less): ");
+                scanf("%10s", name);
+                flush();
 
-                if (init_habit(habit) == 0){
+                if (create_habit(name) == 0){
                     printf("Habit successfully created!\n");
-                    free(habit);
-
                 } else {
                     printf("Failure during habit creation.\n");
-                    free(habit);
                 };
 
                 break;
@@ -45,7 +50,6 @@ int main() {
             case 2: {// delete habit
                 char input[100];
                 printf("Type the name of the habit you want to delete: ");
-
                 fgets(input, sizeof(input), stdin);
                 // remove \n
                 input[strcspn(input, "\n")] = '\0';
@@ -110,3 +114,11 @@ int main() {
     }
     return 0;
 };
+
+// flush things from stdin buffer after inputs
+void flush() {
+    int ch;
+    while ((ch = fgetc(stdin)) != '\n' && ch != EOF) {
+        // discard the rest of the line
+    }
+}
