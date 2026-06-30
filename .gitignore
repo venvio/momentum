@@ -3,4 +3,5 @@ data/
 src/a.out
 src/scratch
 src/scratch.c
-bin/
+bin/*
+!bin/.gitkeep
