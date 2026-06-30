@@ -3,6 +3,7 @@
 #include <string.h>
 #include <time.h>
 #include "operations.h"
+#include "ui.h"
 
 void flush();
 
@@ -11,12 +12,8 @@ int main() {
 
     // initial input block
     while (running) {
-        printf("\nWelcome to the habit tracker!\n"
-        "1) Create new habit\n"
-        "2) Delete habit\n"
-        "3) View habits\n"
-        "4) Exit\n"
-        "Choose an option: ");
+        print_header("Welcome to Lifestyle Counter!");
+        print_main_menu();
 
        int opt = fgetc(stdin);
        flush();
