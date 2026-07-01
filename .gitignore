@@ -1,5 +1,6 @@
 .todo
-data/
+data/*
+!data/.gitkeep
 src/scratch.c
 bin/*
 !bin/.gitkeep
