@@ -12,7 +12,8 @@ void print_main_menu(void) {
     printf("| 1) Create new habit            |\n");
     printf("| 2) Delete habit                |\n");
     printf("| 3) View habits                 |\n");
-    printf("| 4) Exit                        |\n");
+    printf("| 4) Dashboard                   |\n");
+    printf("| 5) Exit                        |\n");
     printf("+--------------------------------+\n");
     printf("Choose an option: ");
 }

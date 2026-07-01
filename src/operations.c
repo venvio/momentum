@@ -10,7 +10,7 @@
 int create_habit(char *name) {
     // create file path
     char file[24] = "";
-    char path[24] = "../data/\0";
+    char path[24] = "data/\0";
     
     strcat(file, name);
     strcat(file, ".csv");
@@ -129,7 +129,7 @@ int get_best(char *file){
     return best;
 }
 
-int get_current(char *file){
+int get_current(char *file) {
     FILE *fptr = fopen(file, "r");
     if (fptr == NULL) {
         printf("File failed to open\n");
@@ -138,7 +138,7 @@ int get_current(char *file){
 
     int c; // read input
     bool swtch = false;
-    int curr; 
+    int curr = 0; 
     int num = 0; // to build multi-digit numbers
 
     // main loop
@@ -170,8 +170,10 @@ int get_current(char *file){
 // increment streak value in given file
 // format: 2026/06/26,1
 int increment(char *path) {
+    printf("Path passed to increment: %s\n", path);
     int curr;
     curr = get_current(path); // get current streak
+    printf("Curr returned from %s: %d\n", path, curr);
 
     FILE *fptr = fopen(path, "a"); // open file
     if (fptr == NULL) {
@@ -180,7 +182,7 @@ int increment(char *path) {
     }
 
     // get date string
-    char date[14];
+    char date[20];
     // raw time
     time_t raw_time = time(NULL);
     struct tm *local = localtime(&raw_time);
@@ -195,5 +197,41 @@ int increment(char *path) {
     fprintf(fptr, "%s,%d\n", date, (curr + 1));
     fclose(fptr);
 
+    return 0;
+}
+
+// display stats from active habits
+int dashboard() {
+    // for reading dir
+    struct dirent *de;
+
+    // open directory
+    DIR *dir = opendir("data/");
+    if (dir == NULL){
+        printf("Failed to open directory.\n");
+        return 1;
+    } 
+
+    // read files in directory
+    while ((de = readdir(dir)) != NULL)  {
+        // skip over first two iterations
+        if (strcmp(de->d_name, ".") == 0 || strcmp(de->d_name, "..") == 0) {
+            continue;
+        }
+
+        // create path string
+        char path[24] = "data/\0";
+        strcat(path, de->d_name);
+        printf("Full path: %s\n", path);
+        
+        int curr = get_current(path);
+        int best = get_best(path);
+
+        printf("%s\n", de->d_name);
+        printf("Current: %d\n", curr);
+        printf("Best: %d\n", best);
+    }
+
+    closedir(dir);
     return 0;
 }
