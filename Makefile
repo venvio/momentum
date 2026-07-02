@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -Iinclude
-SRC = src/main.c src/operations.c src/ui.c
-OUT = bin/habit_tracker
+SRC = $(wildcard src/*.c)
+OUT = bin/momentum
 
 all:
 	$(CC) $(CFLAGS) $(SRC) -o $(OUT)
