@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -Iinclude
-SRC = src/main.c src/operations.c src/ui.c src/menu.c src/helpers.c src/habit.c
+SRC = $(wildcard src/*.c)
 OUT = bin/momentum
 
 all:

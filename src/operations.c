@@ -61,7 +61,7 @@ char **find_files(char *path) {
 
 // increment streak value in given file
 // format: 2026/06/26,1
-int increment(char *path) {
+int increment() {
 
     // get reference date
 
@@ -76,10 +76,6 @@ int increment(char *path) {
             local->tm_year + 1900,
             local->tm_mon + 1,
             local->tm_mday);
-
-    // append new data
-    fprintf(fptr, "%s,%d\n", date, (curr + 1));
-    fclose(fptr);
 
     // difference in days
 

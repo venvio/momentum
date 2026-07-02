@@ -1,5 +1,6 @@
 #ifndef HABIT_H
 #define HABIT_H
+#include "config.h"
 
 typedef struct Habit {
     char h_name[STR_LENGTH]; // name of the habit

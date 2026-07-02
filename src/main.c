@@ -16,7 +16,10 @@ int main() {
         print_header("Welcome to Lifestyle Counter!");
         print_main_menu();
 
-        int option = get_option();
+        int* option;
+        if (get_option(option) != 0){
+            printf("Invalid input.");
+        };
         
         // test valid input against cases
         switch (option) {
@@ -47,6 +50,7 @@ int main() {
             case 5: { 
                 printf("Exiting...\n");
                 running = false; //exit
+                break;
             }
 
             default:{

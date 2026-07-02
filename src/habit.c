@@ -1,3 +1,5 @@
+#include <stdlib.h>
+#include <string.h>
 #include <time.h>
 #include "helpers.h"
 #include "config.h"
@@ -18,8 +20,13 @@ Habit* init_habit(char name[]) {
         return NULL;
     }
 
-    habit->h_name = name;
-    habit->init_date = get_date();
+    strcpy(habit->h_name, name);
+
+    char today[STR_LENGTH];
+    get_today(today, sizeof(today));
+
+    strcpy(habit->init_date, today);
+
     habit->reset = false;
     habit->best = 0;
 
