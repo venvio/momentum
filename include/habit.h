@@ -11,5 +11,6 @@ typedef struct Habit {
 } Habit;
 
 Habit* init_habit(char name[]);
+int save_habit(Habit* h);
 
 #endif

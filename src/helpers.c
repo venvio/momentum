@@ -25,3 +25,22 @@ void flush() {
         // discard the rest of the line
     }
 }
+
+char* get_string(void) {
+    char buffer[STR_LENGTH];
+
+    if (fgets(buffer, sizeof(buffer), stdin) == NULL){
+        return NULL;
+    }
+    
+    flush();
+    
+    char* str = malloc(strlen(buffer) + 1);
+    if (str == NULL){
+        return NULL;
+    }
+
+    strcpy(str, buffer);
+
+    return str;
+}

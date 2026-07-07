@@ -16,7 +16,7 @@ int main() {
         print_header("Welcome to Lifestyle Counter!");
         print_main_menu();
 
-        int* option;
+        int option;
         if (get_option(option) != 0){
             printf("Invalid input.");
         };

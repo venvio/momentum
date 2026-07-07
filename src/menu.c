@@ -8,11 +8,11 @@
 #include "config.h"
 
 // get user's desired option
-int get_option(int* x) {
+int get_option(int x) {
    int opt = fgetc(stdin);
    flush();
 
-    if (opt < '1' || opt > '4') {
+    if (opt < '1' || opt > '9') {
         return 1;
     }
 
@@ -23,22 +23,6 @@ int get_option(int* x) {
     return 0;
 }
 
-// create habit
-int create_habit() {
-    // get name
-    char name[STR_LENGTH];
-    printf("Enter habit name: ");
-    scanf("%23s", name);
-    flush();
-
-    Habit* habit = init_habit(name);
-
-    if (habit == NULL){
-        return 1;
-    }
-
-    return 0;
-}
 
 // save habit
 int save_habit(Habit* h) {
@@ -46,9 +30,9 @@ int save_habit(Habit* h) {
     char file[STR_LENGTH] = "";
     char path[STR_LENGTH] = "data/\0";
     
-    strcat(file, name);
-    strcat(file, ".txt");
-    strcat(path, file);
+    strcat(file, h->h_name); // add file name
+    strcat(file, ".txt"); // file extension
+    strcat(path, file); // add file onto dir
     printf("Full path: %s\n", path);
 
     // create file
