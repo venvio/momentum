@@ -25,6 +25,7 @@ Habit* init_habit(char name[]) {
     char today[STR_LENGTH];
     get_today(today, sizeof(today));
 
+    // fills Habit members
     strcpy(h->h_name, name);
     strcpy(h->init_date, today);
     h->reset = false;

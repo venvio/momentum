@@ -31,11 +31,11 @@ void flush() {
 char* get_string(void) {
     char buffer[STR_LENGTH];
 
-    if (fgets(buffer, sizeof(buffer), stdin) == NULL){
+    if (fgets(buffer, sizeof(buffer), stdin) == NULL) {
         return NULL;
     }
-    
-    flush();
+
+    buffer[strcspn(buffer, '\n')] == '\0'; // replace \n with \0
     
     char* str = malloc(strlen(buffer) + 1);
     if (str == NULL){

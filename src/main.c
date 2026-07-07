@@ -24,13 +24,20 @@ int main() {
         switch (option) {
             case 1: {
 
+                printf("Habit name: ");
                 char* name = get_string();
 
-                if (init_habit(name) !=0) {
-                    printf("Failed to create habit");
-                };
+                Habit* h = init_habit(name);
+
+                if (h == NULL){
+                    printf("Habit creation failed.");
+                }
 
                 // save habit
+                if (save_habit(h) != 0){
+                    printf("Failed to save habit.");
+                };
+
                 break;
             }
 
