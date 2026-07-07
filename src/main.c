@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include "operations.h"
 #include "helpers.h"
 #include "menu.h"
 #include "ui.h"
