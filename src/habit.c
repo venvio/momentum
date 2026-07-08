@@ -90,11 +90,11 @@ int delete_habit(char* filename) {
             // create file path
             char file[STR_LENGTH];
             snprintf(file, sizeof(file), "data/%s", de->d_name);
-            printf("Full path: %s\n", file);
-
             // delete file
-            if (remove(file) != 0) {
-                printf("Failed to delete file: %s", file);
+            if (remove(file) == 0) {
+                printf("File successfully erased!\n");
+            } else {
+                printf("Error deleting file.\n");
             }
 
             break;

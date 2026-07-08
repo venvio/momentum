@@ -19,20 +19,15 @@ int main() {
             printf("Invalid input.");
         };
         
-        printf("option: %d", option);
         // test valid input against cases
         switch (option) {
             case 1: {
-
                 printf("Habit name: \n");
                 char* name = get_string();
-
                 Habit* h = init_habit(name);
-
                 if (h == NULL){
                     printf("Habit creation failed.");
                 }
-
                 // save habit
                 if (save_habit(h) != 0){
                     printf("Failed to save habit.");
