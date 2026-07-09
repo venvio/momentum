@@ -1,5 +1,6 @@
 #ifndef HABIT_H
 #define HABIT_H
+#include <time.h>
 #include "config.h"
 
 typedef struct Habit {
@@ -13,5 +14,7 @@ typedef struct Habit {
 Habit* init_habit(char name[]);
 int save_habit(Habit* h);
 int delete_habit(char* filename);
+int get_current();
+struct tm* get_ref_date(char path[]);
 
 #endif
