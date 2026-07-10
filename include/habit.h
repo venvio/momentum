@@ -11,10 +11,10 @@ typedef struct Habit {
     int h_best; // best streak user has had for this habit
 } Habit;
 
-Habit* init_habit(char name[]);
-int save_habit(Habit* h);
-int delete_habit(char* filename);
-int get_current();
-struct tm* get_ref_date(char path[]);
+Habit* init_habit(char name[]); // takes name as input and inits a Habit struct with default values
+int save_habit(Habit* h); // save habit into data/ directory. uses habit name as file name
+int delete_habit(char* filename); // deletes a given habit from the directory DATA_PATH (defined in config.h)
+int get_current(char path[]); // this function will return the current streak for a given habit
+struct tm* get_ref_date(char path[]); // used in get_current() as the reference date to be subtracted from current date.
 
 #endif

@@ -14,7 +14,7 @@ typedef struct Habit {
     int h_best; // best streak user has had for this habit
 } Habit;
 
-// initialize new habit
+// takes name as input and inits a Habit struct with default values
 Habit* init_habit(char name[]) {
     Habit* h = malloc(sizeof(Habit));
 
@@ -35,10 +35,10 @@ Habit* init_habit(char name[]) {
     return h;
 }
 
-// save habit
+// save habit into data/ directory. uses habit name as file name
 int save_habit(Habit* h) {
-    // create file path
-    char path[STR_LENGTH];
+    char path[STR_LENGTH]; // create file path
+    // THIS COULD BE FIXED TO UTILIZE DATA_PATH FROM CONFIG.H
     snprintf(path, sizeof(path), "data/%s.txt", h->h_name);
     printf("Full path: %s\n", path);
 
@@ -71,6 +71,7 @@ int save_habit(Habit* h) {
     return 0;
 };
 
+// deletes a given habit from the directory DATA_PATH (defined in config.h)
 int delete_habit(char* filename) {
     int i = 0; // for iterating over files
 
@@ -104,37 +105,29 @@ int delete_habit(char* filename) {
     return 0;
 }
 
-int get_current(char path[]) {
-    struct tm* time0 = get_ref_date(path); // get reference date from file
-    time_t t0 = mktime(time0); // convert into seconds since Epoch 
-    time_t t1 = time(NULL); // time now (equals today's date)
-
-    // date diff
-    double diff = difftime(t1, t0);
-    int days = (int)(diff / 86400);
-
-    return days;
-}
-
+// used in get_current() as the reference date to be subtracted from current date.
+// !! note that `struct tm* date` will need to be freed after usage. !!
 struct tm* get_ref_date(char path[]) {
     char buffer[100];
     struct tm *date = malloc(sizeof(struct tm));
 
     FILE *fptr = fopen(path, "r");
-    if (fptr == NULL){
+    if (fptr == NULL) {
         printf("File couldn't be opened.");
 
-        return 1;
+        return NULL;
     }
  
+    // main file reading loop
     while (fgets(buffer, sizeof(buffer), fptr) != NULL) {
-        if (strstr(buffer, "reset:1") != NULL) { // has been reset before
-                if (fgets(buffer, sizeof(buffer), fptr) == NULL){ // capture next line
+        if (strstr(buffer, "reset:1") != NULL) { // habit has been reset before
+                if (fgets(buffer, sizeof(buffer), fptr) == NULL){ // capture next line (reset_date)
                     printf("failure to cap line after reset");
                 };
-                if (strstr(buffer, "reset_date") != NULL) {
+                if (strstr(buffer, "reset_date") != NULL) { // confirm it is "reset_date"
                     int year, month, day;
 
+                    // fill date members from reset_date string
                     sscanf(buffer, "reset_date:%d/%d/%d", &year, &month, &day);
                     date->tm_year = year - 1900;
                     date->tm_mon = month;
@@ -143,9 +136,11 @@ struct tm* get_ref_date(char path[]) {
                     break;
                 } 
             }
+
         if (strstr(buffer, "init_date:") != NULL) { // init date found
             int year, month, day;
 
+            // fill date members from reset_date string
             sscanf(buffer, "init_date:%d/%d/%d", &year, &month, &day);
             date->tm_year = year - 1900;
             date->tm_mon = month;
@@ -157,4 +152,23 @@ struct tm* get_ref_date(char path[]) {
     
     fclose(fptr);
     return date;
+}
+
+// this function will return the current streak for a given habit
+int get_current(char path[]) {
+    struct tm* time0 = get_ref_date(path); // get reference date from file
+    if (time0 == NULL){
+        printf("time0 is in fact NULL.");
+        return -1;
+    }
+    time_t t0 = mktime(time0); // convert into seconds since Epoch 
+    time_t t1 = time(NULL); // time now (equals today's date)
+
+    double diff = difftime(t1, t0); // date difference in seconds
+    printf("(FROM GET_CURRENT)diff t1-t0 in seconds: %f\n", diff);
+
+    int current = (int)(diff / 86400); // convert to days
+    printf("(FROM GET_CURRENT) Current is: %d\n", current);
+
+    return current;
 }
