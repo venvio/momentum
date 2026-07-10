@@ -109,7 +109,8 @@ int delete_habit(char* filename) {
 // !! note that `struct tm* date` will need to be freed after usage. !!
 struct tm* get_ref_date(char path[]) {
     char buffer[100];
-    struct tm *date = malloc(sizeof(struct tm));
+    int year, month, day;
+    struct tm *date = calloc(1,sizeof *date);
 
     FILE *fptr = fopen(path, "r");
     if (fptr == NULL) {
@@ -125,8 +126,6 @@ struct tm* get_ref_date(char path[]) {
                     printf("failure to cap line after reset");
                 };
                 if (strstr(buffer, "reset_date") != NULL) { // confirm it is "reset_date"
-                    int year, month, day;
-
                     // fill date members from reset_date string
                     sscanf(buffer, "reset_date:%d/%d/%d", &year, &month, &day);
                     date->tm_year = year - 1900;
@@ -138,8 +137,6 @@ struct tm* get_ref_date(char path[]) {
             }
 
         if (strstr(buffer, "init_date:") != NULL) { // init date found
-            int year, month, day;
-
             // fill date members from reset_date string
             sscanf(buffer, "init_date:%d/%d/%d", &year, &month, &day);
             date->tm_year = year - 1900;
@@ -149,27 +146,24 @@ struct tm* get_ref_date(char path[]) {
             break;
         }
     }
-    
+
     fclose(fptr);
     return date;
 }
 
 // this function will return the current streak for a given habit
-int get_current(char path[]) {
-    struct tm* time0 = get_ref_date(path); // get reference date from file
+int get_current(struct tm *time0) {
     if (time0 == NULL) {
-        printf("time0 is NULL.");
+        printf("Habit pointer is NULL.");
         return -1;
     }
     time_t t0 = mktime(time0); // convert into seconds since Epoch 
     time_t t1 = time(NULL); // time now (equals today's date)
 
     double diff = difftime(t1, t0); // date difference in seconds
+    int curr = (int)(diff / 86400); // convert to days
 
-    int current = (int)(diff / 86400); // convert to days
-
-    free(time0);
-    return current;
+    return curr;
 }
 
 int get_best(char path[]) {
@@ -190,5 +184,6 @@ int get_best(char path[]) {
         }
     }
     
+    fclose(fptr);
     return best;
 }
