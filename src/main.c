@@ -1,3 +1,4 @@
+#include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -50,24 +51,27 @@ int main() {
             }
 
             case 3: {
-                // view_habits();
+                dashboard();
                 break;
             }
 
-            case 4: {
-                // dashboard();
-                break;
-            }
-
-            case 5: { 
+            case 4: { 
                 printf("Exiting...\n");
                 running = false; //exit
-                break;
+                return 0;
             }
 
             default:{
                 printf("Unable to associate input with action.");
             }
+        }
+
+        printf("\n(Press Enter to continue)");
+        fflush(stdout);
+
+        int ch;
+        while ((ch = getchar()) != '\n' && ch != EOF){
+            //discard rest of line
         }
     }
 
