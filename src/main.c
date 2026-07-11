@@ -30,8 +30,8 @@ int main() {
                 if (h == NULL) {
                     printf("Habit creation failed.");
                 }
-                // save habit
-                if (save_habit(h) != 0) {
+               
+                if (save_habit(h) != 0) { // save habit
                     printf("Failed to save habit.");
                 };
 
