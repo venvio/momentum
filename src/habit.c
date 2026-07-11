@@ -72,11 +72,12 @@ int save_habit(Habit* h) {
 };
 
 // deletes a given habit from the directory DATA_PATH (defined in config.h)
-int delete_habit(char* filename) {
+int delete_habit(void) {
     int i = 0; // for iterating over files
+    struct dirent *de; // for reading dir
 
-    // for reading dir
-    struct dirent *de;
+    printf("Delete which habit?: ");
+    char* filename = get_string();
 
     // open directory
     DIR *dir = opendir(DATA_PATH);
@@ -87,21 +88,23 @@ int delete_habit(char* filename) {
 
     // read files in directory
     while ((de = readdir(dir)) != NULL && i < 10) {
-        if (strstr(de->d_name, filename) != NULL){ // file was found
-            // create file path
-            char file[STR_LENGTH];
-            snprintf(file, sizeof(file), "data/%s", de->d_name);
-            // delete file
-            if (remove(file) == 0) {
-                printf("File successfully erased!\n");
+        if (strstr(de->d_name, filename) != NULL) { // file was found
+            char path[STR_LENGTH]; // create file path
+            snprintf(path, sizeof(path), "data/%s", de->d_name);
+            if (remove(path) == 0) { // delete file
+                printf("File \"%s\" successfully erased!\n", path);
             } else {
                 printf("Error deleting file.\n");
             }
 
             break;
-        } else {continue;}
+        } else {
+
+            continue;
+        }
     }
 
+    free(filename);
     return 0;
 }
 

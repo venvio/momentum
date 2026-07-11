@@ -50,11 +50,13 @@ int dashboard() {
         struct tm *time0 = get_ref_date(file); // get reference date from habit within path
         int current = get_current(time0); // get current streak by subtracting ref date with current date
         free(time0);
-        printf("Current: %d\n", current);
+        printf("Current Streak: %d\n", current);
 
         // get best
         int best = get_best(file);
-        printf("Best: %d\n", best);
+        printf("Best Streak: %d\n", best);
+
+        printf("\n"); // separate each habit by \n
     }
 
     closedir(dir);

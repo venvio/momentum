@@ -20,12 +20,13 @@ int main() {
         int option;
         if (get_option(&option) != 0){
             printf("Invalid input.");
+            continue;
         };
         
         // test valid input against cases
         switch (option) {
             case 1: {
-                printf("Habit name: \n");
+                printf("Habit name: ");
                 char* name = get_string();
                 Habit* h = init_habit(name);
                 if (h == NULL){
@@ -40,10 +41,7 @@ int main() {
             }
 
             case 2: {
-                printf("Delete which habit?: \n");
-                char* filename = get_string();
-
-                if (delete_habit (filename) != 0){
+                if (delete_habit() != 0) {
                     printf("Failed to delete habit.\n");
                 }
 
@@ -51,7 +49,10 @@ int main() {
             }
 
             case 3: {
-                dashboard();
+                if (dashboard() != 0) {
+                    printf("Failed to launch dashboard.\n");
+                }
+
                 break;
             }
 
@@ -66,7 +67,7 @@ int main() {
             }
         }
 
-        printf("\n(Press Enter to continue)");
+        printf("\n(Press Enter to continue...)");
         fflush(stdout);
 
         int ch;
