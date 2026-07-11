@@ -1,3 +1,4 @@
+#include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -17,21 +18,20 @@ int main() {
         print_main_menu();
 
         int option;
-        if (get_option(&option) != 0){
+        if (get_option(&option) != 0) {
             printf("Invalid input.");
+            continue;
         };
         
         // test valid input against cases
         switch (option) {
             case 1: {
-                printf("Habit name: \n");
-                char* name = get_string();
-                Habit* h = init_habit(name);
-                if (h == NULL){
+                Habit* h = init_habit();
+                if (h == NULL) {
                     printf("Habit creation failed.");
                 }
                 // save habit
-                if (save_habit(h) != 0){
+                if (save_habit(h) != 0) {
                     printf("Failed to save habit.");
                 };
 
@@ -39,10 +39,7 @@ int main() {
             }
 
             case 2: {
-                printf("Delete which habit?: \n");
-                char* filename = get_string();
-
-                if (delete_habit (filename) != 0){
+                if (delete_habit() != 0) {
                     printf("Failed to delete habit.\n");
                 }
 
@@ -50,24 +47,29 @@ int main() {
             }
 
             case 3: {
-                // view_habits();
+                if (dashboard() != 0) {
+                    printf("Failed to launch dashboard.\n");
+                }
+
                 break;
             }
 
-            case 4: {
-                // dashboard();
-                break;
-            }
-
-            case 5: { 
+            case 4: { 
                 printf("Exiting...\n");
-                running = false; //exit
-                break;
+                return 0;
             }
 
             default:{
                 printf("Unable to associate input with action.");
             }
+        }
+
+        printf("\n(Press Enter to continue...)");
+        fflush(stdout);
+
+        int ch;
+        while ((ch = getchar()) != '\n' && ch != EOF) {
+            //discard rest of line
         }
     }
 

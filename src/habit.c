@@ -15,7 +15,10 @@ typedef struct Habit {
 } Habit;
 
 // takes name as input and inits a Habit struct with default values
-Habit* init_habit(char name[]) {
+Habit* init_habit(void) {
+    printf("Habit name: ");
+    char* name = get_string();
+
     Habit* h = malloc(sizeof(Habit));
 
     if (h == NULL){
@@ -32,6 +35,7 @@ Habit* init_habit(char name[]) {
     h->reset = false;
     h->h_best = 0;
 
+    free(name);
     return h;
 }
 
@@ -40,10 +44,9 @@ int save_habit(Habit* h) {
     char path[STR_LENGTH]; // create file path
     // THIS COULD BE FIXED TO UTILIZE DATA_PATH FROM CONFIG.H
     snprintf(path, sizeof(path), "data/%s.txt", h->h_name);
-    printf("Full path: %s\n", path);
 
-    // check if file already exists
-    FILE *check = fopen(path, "r");
+    
+    FILE *check = fopen(path, "r"); // check if file already exists
     if (check != NULL) {
         fclose(check);
         printf("File \"%s\" already exists.\n", path);
@@ -66,17 +69,18 @@ int save_habit(Habit* h) {
     fprintf(fptr, "best:%d\n", h->h_best);
     fclose(fptr);
 
-    printf("Habit data created at \"%s\"\n", path);
+    printf("Habit created at \"%s\"\n", path);
 
     return 0;
 };
 
 // deletes a given habit from the directory DATA_PATH (defined in config.h)
-int delete_habit(char* filename) {
+int delete_habit(void) {
     int i = 0; // for iterating over files
+    struct dirent *de; // for reading dir
 
-    // for reading dir
-    struct dirent *de;
+    printf("Delete which habit?: ");
+    char* filename = get_string();
 
     // open directory
     DIR *dir = opendir(DATA_PATH);
@@ -87,21 +91,23 @@ int delete_habit(char* filename) {
 
     // read files in directory
     while ((de = readdir(dir)) != NULL && i < 10) {
-        if (strstr(de->d_name, filename) != NULL){ // file was found
-            // create file path
-            char file[STR_LENGTH];
-            snprintf(file, sizeof(file), "data/%s", de->d_name);
-            // delete file
-            if (remove(file) == 0) {
-                printf("File successfully erased!\n");
+        if (strstr(de->d_name, filename) != NULL) { // file was found
+            char path[STR_LENGTH]; // create file path
+            snprintf(path, sizeof(path), "data/%s", de->d_name);
+            if (remove(path) == 0) { // delete file
+                printf("File \"%s\" successfully erased!\n", path);
             } else {
                 printf("Error deleting file.\n");
             }
 
             break;
-        } else {continue;}
+        } else {
+
+            continue;
+        }
     }
 
+    free(filename);
     return 0;
 }
 
@@ -109,7 +115,8 @@ int delete_habit(char* filename) {
 // !! note that `struct tm* date` will need to be freed after usage. !!
 struct tm* get_ref_date(char path[]) {
     char buffer[100];
-    struct tm *date = malloc(sizeof(struct tm));
+    int year, month, day;
+    struct tm *date = calloc(1,sizeof *date);
 
     FILE *fptr = fopen(path, "r");
     if (fptr == NULL) {
@@ -125,8 +132,6 @@ struct tm* get_ref_date(char path[]) {
                     printf("failure to cap line after reset");
                 };
                 if (strstr(buffer, "reset_date") != NULL) { // confirm it is "reset_date"
-                    int year, month, day;
-
                     // fill date members from reset_date string
                     sscanf(buffer, "reset_date:%d/%d/%d", &year, &month, &day);
                     date->tm_year = year - 1900;
@@ -138,8 +143,6 @@ struct tm* get_ref_date(char path[]) {
             }
 
         if (strstr(buffer, "init_date:") != NULL) { // init date found
-            int year, month, day;
-
             // fill date members from reset_date string
             sscanf(buffer, "init_date:%d/%d/%d", &year, &month, &day);
             date->tm_year = year - 1900;
@@ -149,27 +152,24 @@ struct tm* get_ref_date(char path[]) {
             break;
         }
     }
-    
+
     fclose(fptr);
     return date;
 }
 
 // this function will return the current streak for a given habit
-int get_current(char path[]) {
-    struct tm* time0 = get_ref_date(path); // get reference date from file
+int get_current(struct tm *time0) {
     if (time0 == NULL) {
-        printf("time0 is NULL.");
+        printf("Habit pointer is NULL.");
         return -1;
     }
     time_t t0 = mktime(time0); // convert into seconds since Epoch 
     time_t t1 = time(NULL); // time now (equals today's date)
 
     double diff = difftime(t1, t0); // date difference in seconds
+    int curr = (int)(diff / 86400); // convert to days
 
-    int current = (int)(diff / 86400); // convert to days
-
-    free(time0);
-    return current;
+    return curr;
 }
 
 int get_best(char path[]) {
@@ -190,5 +190,6 @@ int get_best(char path[]) {
         }
     }
     
+    fclose(fptr);
     return best;
 }
