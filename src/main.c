@@ -26,6 +26,14 @@ int main() {
         // test valid input against cases
         switch (option) {
             case 1: {
+                if (dashboard() != 0) {
+                    printf("Failed to launch dashboard.\n");
+                }
+
+                break;
+            }
+
+            case 2: {
                 Habit* h = init_habit();
                 if (h == NULL) {
                     printf("Habit creation failed.");
@@ -38,17 +46,9 @@ int main() {
                 break;
             }
 
-            case 2: {
+            case 3: {
                 if (delete_habit() != 0) {
                     printf("Failed to delete habit.\n");
-                }
-
-                break;
-            }
-
-            case 3: {
-                if (dashboard() != 0) {
-                    printf("Failed to launch dashboard.\n");
                 }
 
                 break;

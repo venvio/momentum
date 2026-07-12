@@ -17,9 +17,9 @@ void print_header(const char *title) {
 
 void print_main_menu(void) {
     print_header("Options:");
-    printf("| 1) Create new habit            |\n");
-    printf("| 2) Delete habit                |\n");
-    printf("| 3) Dashboard                   |\n");
+    printf("| 1) Dashboard                   |\n");
+    printf("| 2) New Habit                   |\n");
+    printf("| 3) Delete Habit                |\n");
     printf("| 4) Exit                        |\n");
     printf("+--------------------------------+\n");
     printf("Choose an option: ");

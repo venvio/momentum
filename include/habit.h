@@ -18,5 +18,6 @@ struct tm* get_ref_date(char path[]); // used in get_current() as the reference 
 int get_current(struct tm *time0); // returns the current streak for a given habit
 int get_best(char path[]); // returns the best streak for a given habit
 int update_best(char path[], int new_best); // updates best record in file
+int reset_streak(char path[]); // updates reset_date record in file
 
 #endif

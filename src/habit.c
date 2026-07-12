@@ -227,3 +227,41 @@ int update_best(char path[], int new_best) {
 
     return 0;
 }
+
+
+int reset_streak(char path[]) {
+    char buffer[100];
+    FILE *input = fopen(path, "r"); // open existing file
+    FILE *output = fopen(TEMP_FILE, "w"); // create temp file
+    char *target = "reset_date:";
+
+    // get today's date
+    char today[STR_LENGTH];
+    get_today(today, sizeof(today));
+
+    while (fgets(buffer, sizeof(buffer), input) != NULL) {
+        // line for reset_date: found
+        if (strstr(buffer, target) != NULL) {
+            fprintf(output, "reset_date:%s\n", today); // insert updated data
+
+        } else {
+            fputs(buffer, output); // copy unchanged data
+        }
+    }
+
+    // close file pointers
+    fclose(input);
+    fclose(output);
+
+    if (remove(path) != 0) { // remove old file
+        printf("Error erasing old file \"%s\".\n", path);
+        return 1;
+    }
+
+    if (rename(TEMP_FILE, path) != 0) { // rename new file
+        printf("Error renaming temp file \"%s\"\n", TEMP_FILE);
+        return 1;
+    }
+
+    return 0;
+}

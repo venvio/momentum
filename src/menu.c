@@ -23,7 +23,7 @@ int get_option(int* x) {
     return 0;
 }
 
-// display stats from active habits
+// dashboard which displays stats from active habits
 int dashboard() {
     struct dirent *de; // for reading dir
     DIR *dir = opendir(DATA_PATH); // open directory
