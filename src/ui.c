@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include "ui.h"
 #include "config.h"
 
@@ -42,7 +43,7 @@ void nap(int seconds) {
 }
 
 int print_dashboard(char habit[], int current, int best){
-    printf("Habit: " ANSI_CYAN "%s" COLOR_RESET "\n", habit);
+    printf("Habit: " ANSI_CYAN "%.*s" COLOR_RESET "\n", (int)strlen(habit) - 4, habit);
     printf("Current Streak: " ANSI_RED "%d" COLOR_RESET "\n", current);
     printf("Best Streak: " ANSI_GREEN "%d" COLOR_RESET "\n", best);
     printf("\n");
