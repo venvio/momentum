@@ -58,7 +58,6 @@ void habit_list(void) {
 
     if (dir == NULL){
         printf("Failed to open %s\n", DATA_PATH);
-        return 1;
     } 
 
     print_header("Saved Habits");
@@ -72,5 +71,4 @@ void habit_list(void) {
     print_border();
 
     closedir(dir);
-    return 0;
 }

@@ -48,7 +48,11 @@ int main() {
             }
 
             case 4: { 
-                //reset streak
+                if (reset_streak() != 0) {
+                    printf("Failed to reset streak.\n");
+                }
+
+                break;
             }
 
             case 5: { 

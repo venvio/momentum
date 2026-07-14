@@ -225,16 +225,16 @@ int update_best(char path[], int new_best) {
 
 int reset_streak(void) {
     char buffer[100];
-    char file[100];
     char path[100];
-    char *target = "reset_date:";
+    char *date_target = "reset_date:";
+    char *reset_target = "reset:";
 
     habit_list(); // show current habits
 
     printf("Reset which habit?: ");
     char* file = get_string();
     snprintf(path, sizeof(path), "data/%s.txt", file); // build path
-    
+
     // get today's date
     char today[STR_LENGTH];
     get_today(today, sizeof(today));
@@ -243,12 +243,17 @@ int reset_streak(void) {
     FILE *output = fopen(TEMP_FILE, "w"); // create temp file
 
     while (fgets(buffer, sizeof(buffer), input) != NULL) {
-        // line for reset_date: found
-        if (strstr(buffer, target) != NULL) {
+        // reset: found
+        if (strstr(buffer, reset_target) != NULL){
+            fprintf(output, "reset:%d\n", 1); // set reset to 1 (true)
+        }
+        // reset_date: found
+        else if (strstr(buffer, date_target) != NULL) {
             fprintf(output, "reset_date:%s\n", today); // insert updated data
-
-        } else {
-            fputs(buffer, output); // copy unchanged data
+        }
+        // copy unchanged data
+        else {
+            fputs(buffer, output);
         }
     }
 
@@ -265,6 +270,8 @@ int reset_streak(void) {
         printf("Error renaming temp file \"%s\"\n", TEMP_FILE);
         return 1;
     }
+
+    printf("Streak for \"%s\" reset to 0. You got this, don't give up! :)\n");
 
     return 0;
 }
