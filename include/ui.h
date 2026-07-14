@@ -4,7 +4,8 @@
 void print_header(const char *title);
 void print_main_menu(void);
 void clear_console(void);
-void nap(int seconds);
+void nap(int seconds); // sleep()
 int print_dashboard(char habit[], int current, int best);
+void habit_list(void); // prints a list of current habits
 
 #endif

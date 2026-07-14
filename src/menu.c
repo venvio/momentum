@@ -1,12 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
-#include <dirent.h>
-#include <assert.h>
-#include "helpers.h"
-#include "habit.h"
-#include "config.h"
+#include "common.h"
 
 // get user's desired option
 int get_option(int* x) {
@@ -25,10 +17,10 @@ int get_option(int* x) {
 
 // dashboard which displays stats from active habits
 int dashboard() {
-    struct dirent *de; // for reading dir
-    DIR *dir = opendir(DATA_PATH); // open directory
+    struct dirent *de;
+    DIR *dir = opendir(DATA_PATH);
 
-    if (dir == NULL){ // check if directory failed to open
+    if (dir == NULL){
         printf("Failed to open %s\n", DATA_PATH);
         return 1;
     } 

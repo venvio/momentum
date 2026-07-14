@@ -1,11 +1,4 @@
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
-#include "helpers.h"
-#include "menu.h"
-#include "ui.h"
+#include "common.h"
 
 int main() {
     bool running = true;
@@ -55,6 +48,14 @@ int main() {
             }
 
             case 4: { 
+                if (reset_streak() != 0) {
+                    printf("Failed to reset streak.\n");
+                }
+
+                break;
+            }
+
+            case 5: { 
                 printf("Exiting...\n");
                 return 0;
             }
