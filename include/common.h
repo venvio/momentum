@@ -12,7 +12,6 @@
 #include "config.h"
 #include "habit.h"
 #include "helpers.h"
-#include "menu.h"
 #include "ui.h"
 
 #endif

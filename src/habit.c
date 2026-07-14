@@ -31,7 +31,6 @@ Habit* init_habit(void) {
 // save habit into data/ directory. uses habit name as file name
 int save_habit(Habit* h) {
     char path[PATH_LENGTH]; // create file path
-    // THIS COULD BE FIXED TO UTILIZE HABIT_PATH FROM CONFIG.H
     snprintf(path, sizeof(path), "%s%s.txt", HABIT_PATH, h->h_name);
 
     
@@ -273,5 +272,43 @@ int reset_streak(void) {
     printf("Streak for \"%s\" reset to 0. You got this, don't give up! :)\n");
 
     free(file);
+    return 0;
+}
+
+// dashboard which displays stats from active habits
+int dashboard() {
+    struct dirent *de;
+    DIR *dir = opendir(HABIT_PATH);
+
+    if (dir == NULL){
+        printf("Failed to open %s\n", HABIT_PATH);
+        return 1;
+    } 
+    
+    print_header("Habit Streak Dashboard");
+    while ((de = readdir(dir)) != NULL) { // iterate over files in dir
+        if (strcmp(de->d_name, ".") == 0 || strcmp(de->d_name, "..") == 0) { // skip over sys directory entries
+            continue;
+        }
+
+        char file[STR_LENGTH]; // make full path
+        snprintf(file, sizeof(file), "%s%s", HABIT_PATH, de->d_name); 
+
+        // get current and best streaks
+        struct tm *time0 = get_ref_date(file);
+        int current = get_current(time0);
+        int best = get_best(file); 
+
+        // check if current streak is better than recorded best
+        if (current >= best) {
+            update_best(file, current);
+            best = get_best(file);
+            print_dashboard(de->d_name, current, best);
+        }
+        else { print_dashboard(de->d_name, current, best); }
+    }
+    print_border();
+
+    closedir(dir);
     return 0;
 }

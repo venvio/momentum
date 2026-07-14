@@ -92,3 +92,18 @@ char **find_files(char *path) {
 
     return files;
 }
+
+// get user's desired option
+int get_option(int* x) {
+   int opt = fgetc(stdin);
+   flush();
+
+    if (opt < '1' || opt > '9') {
+        return 1;
+    }
+
+    int option = opt - '0';
+    *x = option;
+
+    return 0;
+}
