@@ -1,11 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <dirent.h>
-#include <time.h>
-#include "ui.h"
-#include "helpers.h"
-#include "config.h"
+#include "common.h"
 
 typedef struct Habit {
     char h_name[STR_LENGTH]; // name of the habit

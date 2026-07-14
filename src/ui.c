@@ -1,9 +1,4 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <dirent.h>
-#include "ui.h"
-#include "config.h"
+#include "common.h"
 
 #ifdef _WIN32
 #include <windows.h>

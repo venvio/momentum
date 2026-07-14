@@ -1,10 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
-#include <dirent.h>
-#include <regex.h>
-#include "config.h"
+#include "common.h"
 
 // gets the date from system
 void get_today(char today[], size_t size) {

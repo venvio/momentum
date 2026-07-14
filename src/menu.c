@@ -1,13 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
-#include <dirent.h>
-#include <assert.h>
-#include "helpers.h"
-#include "habit.h"
-#include "config.h"
-#include "ui.h"
+#include "common.h"
 
 // get user's desired option
 int get_option(int* x) {
