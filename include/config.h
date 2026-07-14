@@ -1,7 +1,7 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#define STR_LENGTH 100
+#define STR_LENGTH 100 
 
 #define HABIT_PATH "habit/"
 #define DATA_PATH "data/"

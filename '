@@ -30,7 +30,7 @@ Habit* init_habit(void) {
 // save habit into data/ directory. uses habit name as file name
 int save_habit(Habit* h) {
     char path[STR_LENGTH]; // create file path
-    snprintf(path, sizeof(path), "%s%.94s.txt", HABIT_PATH, h->h_name);
+    snprintf(path, sizeof(path), "%s%s.txt", HABIT_PATH, h->h_name);
 
     
     FILE *check = fopen(path, "r"); // check if file already exists
@@ -63,6 +63,7 @@ int save_habit(Habit* h) {
 
 // deletes a given habit from the directory HABIT_PATH (defined in config.h)
 int delete_habit(void) {
+    char buffer[STR_LENGTH];
     char path[STR_LENGTH];
     int i = 0; // for iterating over files
     struct dirent *de; // for reading dir
@@ -267,7 +268,7 @@ int reset_streak(void) {
         return 1;
     }
 
-    printf("Streak for \"%s\" reset to 0. You got this, don't give up! :)\n", path);
+    printf("Streak for \"%s\" reset to 0. You got this, don't give up! :)\n");
 
     free(file);
     return 0;
