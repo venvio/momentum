@@ -17,7 +17,7 @@ void print_main_menu(void) {
     printf("| 1) Dashboard                   |\n");
     printf("| 2) New Habit                   |\n");
     printf("| 3) Delete Habit                |\n");
-    printf("| 4) Reset a Streak :(           |\n");
+    printf("| 4) Reset a Streak              |\n");
     printf("| 5) Exit                        |\n");
     printf("+--------------------------------+\n");
     printf("Choose an option: ");

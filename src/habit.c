@@ -267,7 +267,7 @@ int reset_streak(void) {
         return 1;
     }
 
-    printf("Streak for \"%s\" reset to 0. You got this, don't give up! :)\n", path);
+    printf("Streak for \"%s\" reset to 0.\n\nYou got this, don't give up! :)\n", path);
 
     free(file);
     return 0;
