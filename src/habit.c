@@ -285,7 +285,7 @@ int dashboard() {
     
     print_header("Habit Streak Dashboard");
     while ((de = readdir(dir)) != NULL) { // iterate over files in dir
-        if (strcmp(de->d_name, ".") == 0 || strcmp(de->d_name, "..") == 0 || strcmp(de->d_name, ".gitkeep")) { // skip over sys directory entries
+        if (strcmp(de->d_name, ".") == 0 || strcmp(de->d_name, "..") == 0 || strcmp(de->d_name, ".gitkeep") == 0) {
             continue;
         }
 
