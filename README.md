@@ -12,8 +12,8 @@ First, clone the repo in your desired location:<br>
 Navigate to the directory:<br>
 `cd momentum`
 
-Create the executable with make:<br>
-`make`
+Install the program:<br>
+`make install`
 
 This will create the executable in the `bin/` directory:<br>
 `bin/momentum`
@@ -29,4 +29,8 @@ Primary: [venvio](https://github.com/venvio)<br>
 Contributor(s): [blackhorizonX](https://github.com/blackhorizonX)
 
 # Acknowledgments
-I [streamed](https://www.youtube.com/@venv_io) the development of this on YouTube and I want to thank the viewers who gave me suggestions and insights along the way. They helped me with some tough bugs and I was glad to have their company.
+I [streamed](https://www.youtube.com/@venv_io) the development of this on YouTube and I want to thank the viewers who gave me suggestions and insights along the way. They helped me with some tough bugs and I was glad to have their company.<br>
+Special thanks to:<br>
+* [blackhorizonX](https://github.com/blackhorizonX)
+* [klewaur](https://github.com/piadi-su)
+* andrewlewis7610
