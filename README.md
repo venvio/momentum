@@ -15,11 +15,14 @@ Navigate to the directory:<br>
 Install the program:<br>
 `make install`
 
-This will create the executable in the `bin/` directory:<br>
-`bin/momentum`
+This will create the executable `momentum` in the `~/.local/bin/` directory:<br>
+`~/.local/bin/momentum`
 
-From within the directory, you can run the program with:<br>
-`./bin/momentum`
+Ensure that `~/.local/bin` is in your shell's PATH. If not, you can add it with:
+`export PATH="$HOME/.local/bin:$PATH"`
+
+Run the program with the following command:
+`momentum`
 
 # Usage
 The primary way of interacting with the program is adding habits and displaying a dashboard which shows you how many consecutive days you have kept up with your new habit.<br>
