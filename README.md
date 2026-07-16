@@ -18,10 +18,10 @@ Install the program:<br>
 This will create the executable `momentum` in the `~/.local/bin/` directory:<br>
 `~/.local/bin/momentum`
 
-Ensure that `~/.local/bin` is in your shell's PATH. If not, you can add it with:
+Ensure that `~/.local/bin` is in your shell's PATH. If not, you can add it with:<br>
 `export PATH="$HOME/.local/bin:$PATH"`
 
-Run the program with the following command:
+Run the program with the following command:<br>
 `momentum`
 
 # Usage

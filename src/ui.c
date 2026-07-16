@@ -6,26 +6,36 @@
 #include <unistd.h>
 #endif
 
+void print_border(int length) {
+    printf("*");
+    for (int i = 0; i < length; i++) {
+        printf("-");
+    }
+    printf("*\n");
+}
+
+void print_menu_item(const char *item) {
+    int width = BORDER_LENGTH - 1;
+
+    printf("| %-*s|\n", width, item);
+}
+
 void print_header(const char *title) {
-    printf("\n+--------------------------------+\n");
-    printf("| %-30s |\n", title);
-    printf("+--------------------------------+\n");
+    print_border(BORDER_LENGTH);
+    print_menu_item(title);
+    print_border(BORDER_LENGTH);
 }
 
 void print_main_menu(void) {
-    print_header("Options:");
-    printf("| 1) Dashboard                   |\n");
-    printf("| 2) New Habit                   |\n");
-    printf("| 3) Delete Habit                |\n");
-    printf("| 4) Reset a Streak              |\n");
-    printf("| 5) Exit                        |\n");
-    printf("+--------------------------------+\n");
+    print_menu_item("1) Dashboard");
+    print_menu_item("2) New Habit");
+    print_menu_item("3) Delete Habit");
+    print_menu_item("4) Reset Streak");
+    print_menu_item("5) Exit");
+    print_border(BORDER_LENGTH);
     printf("Choose an option: ");
 }
 
-void print_border(void) {
-    printf("+--------------------------------+\n");
-}
 
 void clear_console(void) {
     #ifdef _WIN32
@@ -68,7 +78,7 @@ void habit_list(void) {
 
         printf("|•%.*s\n", (int)strlen(de->d_name) - 4, de->d_name);
     }
-    print_border();
+    print_border(BORDER_LENGTH);
 
     closedir(dir);
 }

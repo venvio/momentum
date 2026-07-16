@@ -305,7 +305,11 @@ int dashboard() {
         }
         else { print_dashboard(de->d_name, current, best); }
     }
-    print_border();
+    print_border(BORDER_LENGTH);
+
+    printf("You have looked at your streaks for %d days in a row!\n", 3);
+
+    print_border(BORDER_LENGTH);
 
     closedir(dir);
     return 0;

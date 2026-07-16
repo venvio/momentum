@@ -2,6 +2,7 @@
 #define CONFIG_H
 
 #define STR_LENGTH 100 
+#define BORDER_LENGTH 50
 
 #define HABIT_PATH "habit/"
 #define DATA_PATH "data/"
@@ -11,6 +12,7 @@
 #define ANSI_GREEN "\x1b[32m"
 #define ANSI_BLUE "\x1b[34m"
 #define ANSI_CYAN "\x1b[36m"
+#define ANSI_YELLOW "\x1b[33m"
 #define COLOR_RESET "\x1b[0m"
 
 #endif
