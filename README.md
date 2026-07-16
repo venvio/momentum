@@ -24,6 +24,9 @@ Ensure that `~/.local/bin` is in your shell's PATH. If not, you can add it with:
 Run the program with the following command:<br>
 `momentum`
 
+You can uninstall the program with:<br>
+`make uninstall`
+
 # Usage
 The primary way of interacting with the program is adding habits and displaying a dashboard which shows you how many consecutive days you have kept up with your new habit.<br>
 
